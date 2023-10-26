@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
-    private bool isJumping;
+    // private bool isJumping;
     private bool doubleJump;
 
     [SerializeField] private LayerMask jumpableGround;
@@ -19,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     
 
     private enum MovementState { idle, running, jumping, falling, doublejumping }
-    
 
+    [SerializeField] private AudioSource jumpSoundEffect;
     private float dirX = 0f;
 
     // Start is called before the first frame update
@@ -48,8 +48,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if(IsGrounded() || doubleJump)
             {
-            rb.velocity = new Vector2(rb.velocity.x, doubleJump ? doublejumpForce : jumpForce);
-            doubleJump = !doubleJump;
+                jumpSoundEffect.Play();
+                rb.velocity = new Vector2(rb.velocity.x, doubleJump ? doublejumpForce : jumpForce);
+                doubleJump = !doubleJump;
 
             }
         }
@@ -83,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         if(rb.velocity.y > .1f)
         {
             state = MovementState.jumping;
-            isJumping = true;
+            // isJumping = true;
 
         }
         //else if (isJumping)

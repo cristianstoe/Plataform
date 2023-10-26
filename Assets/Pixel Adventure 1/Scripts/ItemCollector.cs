@@ -9,10 +9,12 @@ public class ItemCollector : MonoBehaviour
 
     [SerializeField] private Text pineappleText;
 
+    [SerializeField] private AudioSource collectionSoundEffect;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Pineapple"))
         {
+            collectionSoundEffect.Play();
             Destroy(collision.gameObject);
             pineapple++;
             pineappleText.text = "Abacaxis: " + pineapple;
